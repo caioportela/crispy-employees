@@ -4,8 +4,9 @@
   "description": "Serves crispy employees",
   "main": "server.js",
   "scripts": {
-    "coverage": "nyc npm test",
+    "lint": "eslint .",
     "start": "node server.js",
+    "test-cov": "nyc npm test",
     "test": "NODE_ENV=test mocha"
   },
   "repository": {
