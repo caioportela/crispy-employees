@@ -5,8 +5,7 @@ const { User } = require('../../../src/models');
 describe('Unit | Model | User', () => {
   const data = {
     company: 1,
-    firstName: 'Matt',
-    lastName: 'Bellamy',
+    name: 'Matt Bellamy',
     password: '123456',
     username: 'matt.bellamy',
   };
@@ -19,11 +18,10 @@ describe('Unit | Model | User', () => {
 
       const errors = validationError.errors;
 
-      should(errors[0].message).be.equal('User.firstName cannot be null');
-      should(errors[1].message).be.equal('User.lastName cannot be null');
-      should(errors[2].message).be.equal('User.password cannot be null');
-      should(errors[3].message).be.equal('User.username cannot be null');
-      should(errors[4].message).be.equal('User.company cannot be null');
+      should(errors[0].message).be.equal('User.name cannot be null');
+      should(errors[1].message).be.equal('User.password cannot be null');
+      should(errors[2].message).be.equal('User.username cannot be null');
+      should(errors[3].message).be.equal('User.company cannot be null');
     }
   });
 
@@ -31,8 +29,7 @@ describe('Unit | Model | User', () => {
     const user = await User.create(data);
 
     should(user).be.instanceof(User);
-    should(user.firstName).be.equal(data.firstName);
-    should(user.lastName).be.equal(data.lastName);
+    should(user.name).be.equal(data.name);
     should(user.username).be.equal(data.username);
 
     should(bcrypt.compareSync(data.password, user.password)).be.true();

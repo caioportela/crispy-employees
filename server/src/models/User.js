@@ -5,8 +5,7 @@ class User extends Model {
   static init(sequelize) {
     return super.init({
       admin: { type: DataTypes.BOOLEAN, defaultValue: false },
-      firstName: { type: DataTypes.STRING, allowNull: false },
-      lastName: { type: DataTypes.STRING, allowNull: false },
+      name: { type: DataTypes.STRING, allowNull: false },
       password: { type: DataTypes.STRING, allowNull: false },
       username: {
         type: DataTypes.STRING,
