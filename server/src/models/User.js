@@ -8,6 +8,11 @@ class User extends Model {
       firstName: { type: DataTypes.STRING, allowNull: false },
       lastName: { type: DataTypes.STRING, allowNull: false },
       password: { type: DataTypes.STRING, allowNull: false },
+      username: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+      },
     }, {
       sequelize,
       paranoid: true,
