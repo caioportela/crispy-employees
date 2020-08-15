@@ -24,7 +24,7 @@ require('./src/routes')(app);
 
 if(process.env.NODE_ENV === 'test') {
   logger.info('Exporting app for testing');
-  logger.level = 'info';
+  logger.level = 'crit';
 
   module.exports = app;
 } else {
