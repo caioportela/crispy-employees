@@ -2,16 +2,18 @@
   "name": "crispy-employees-server",
   "version": "0.0.0",
   "description": "Serves crispy employees",
-  "author": "Caio Portela",
+  "main": "server.js",
+  "scripts": {
+    "coverage": "nyc npm test",
+    "start": "node server.js",
+    "test": "NODE_ENV=test mocha"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/caioportela/crispy-employees.git"
   },
+  "author": "Caio Portela",
   "license": "MIT",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js"
-  },
   "dependencies": {
     "express": "^4.17.1",
     "sequelize": "^6.3.4",
@@ -19,6 +21,11 @@
     "winston": "^3.3.3"
   },
   "devDependencies": {
-    "eslint": "^7.7.0"
+    "eslint": "^7.7.0",
+    "mocha": "^8.1.1",
+    "mocha-clean": "^1.0.0",
+    "nyc": "^15.1.0",
+    "should": "^13.2.3",
+    "supertest": "^4.0.2"
   }
 }

@@ -22,6 +22,13 @@ app.use(bodyParser.json());
 // Initialize routes
 require('./src/routes')(app);
 
-app.listen(PORT, () => {
-  logger.info(`Running on http://localhost:${PORT}`);
-});
+if(process.env.NODE_ENV === 'test') {
+  logger.info('Exporting app for testing');
+  logger.level = 'info';
+
+  module.exports = app;
+} else {
+  app.listen(PORT, () => {
+    logger.info(`Running on http://localhost:${PORT}`);
+  });
+}
