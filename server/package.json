@@ -1,0 +1,21 @@
+{
+  "name": "crispy-employees-server",
+  "version": "0.0.0",
+  "description": "Serves crispy employees",
+  "author": "Caio Portela",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/caioportela/crispy-employees.git"
+  },
+  "license": "MIT",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.7.0"
+  }
+}
