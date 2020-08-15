@@ -6,6 +6,11 @@
 const express = require('express');
 const router = express.Router();
 
-const { UserController } = require('./controllers');
+const { CompanyController, UserController } = require('./controllers');
+
+
+// Company Controller
+router.post('/companies', CompanyController.create);
+
 
 module.exports = (app) => app.use(router);
