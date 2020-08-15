@@ -31,6 +31,10 @@ files.forEach((file) => {
 });
 
 for(let modelName in db) {
+  if(db[modelName].associate) {
+    db[modelName].associate(db);
+  }
+
   if(db[modelName].hooks) {
     db[modelName].hooks();
   }
