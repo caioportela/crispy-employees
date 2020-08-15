@@ -13,4 +13,8 @@ const { CompanyController, UserController } = require('./controllers');
 router.post('/companies', CompanyController.create);
 
 
+// User Controller
+router.post('/users', UserController.create);
+
+
 module.exports = (app) => app.use(router);
