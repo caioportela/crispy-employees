@@ -30,6 +30,12 @@ files.forEach((file) => {
   db[model.name] = model;
 });
 
+for(let modelName in db) {
+  if(db[modelName].hooks) {
+    db[modelName].hooks();
+  }
+}
+
 // Synchronize all models
 sequelize.sync();
 
