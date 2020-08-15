@@ -5,6 +5,9 @@ const express = require('express');
 
 const PORT = 3000;
 
+// Initialize logger
+const logger = require('./src/loaders/logger');
+
 const app = express();
 
 app.use(bodyParser.json());
@@ -13,5 +16,5 @@ app.use(bodyParser.json());
 require('./src/routes')(app);
 
 app.listen(PORT, () => {
-  console.log(`Running on http://localhost:${PORT}`);
+  logger.info(`Running on http://localhost:${PORT}`);
 });
