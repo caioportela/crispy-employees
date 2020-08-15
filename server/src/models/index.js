@@ -16,7 +16,7 @@ const files = fs.readdirSync(__dirname).filter((file) => {
   return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
 });
 
-// Connect to a database
+// Connect to the database
 const sequelize = new Sequelize(database[process.env.NODE_ENV || 'development']);
 const db = {};
 
