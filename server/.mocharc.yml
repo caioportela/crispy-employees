@@ -8,13 +8,7 @@ extension:
 recursive: true
 reporter: 'spec'
 require: 'mocha-clean'
-slow: 75
+slow: 150
 sort: false
 timeout: 2000
 ui: 'bdd'
-# watch: false
-# watch-files:
-#   - 'lib/**/*.js'
-#   - 'test/**/*.js'
-# watch-ignore:
-#   - 'lib/vendor'
