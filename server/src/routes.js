@@ -1,6 +1,6 @@
 /**
  * Routes
- * @description :: Configuring application routes
+ * @description :: Setup application routes
 **/
 
 const express = require('express');
