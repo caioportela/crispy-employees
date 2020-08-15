@@ -28,6 +28,16 @@ class User extends Model {
     });
   }
 
+  static associate(models) {
+    this.belongsTo(models.Company, {
+      foreignKey: {
+        allowNull: false,
+        field: 'companyId',
+        name: 'company',
+      },
+    });
+  }
+
   static hooks() {
     this.beforeCreate('assignPasswordHash', async (user) => {
       user.password = user.generateHash();

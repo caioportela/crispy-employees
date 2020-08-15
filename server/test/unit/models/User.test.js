@@ -1,9 +1,10 @@
-const { User } = require('../../../src/models');
 const should = require('should/as-function');
 const bcrypt = require('bcrypt');
+const { User } = require('../../../src/models');
 
 describe('Unit | Model | User', () => {
   const data = {
+    company: 1,
     firstName: 'Matt',
     lastName: 'Bellamy',
     password: '123456',
@@ -22,6 +23,7 @@ describe('Unit | Model | User', () => {
       should(errors[1].message).be.equal('User.lastName cannot be null');
       should(errors[2].message).be.equal('User.password cannot be null');
       should(errors[3].message).be.equal('User.username cannot be null');
+      should(errors[4].message).be.equal('User.company cannot be null');
     }
   });
 
