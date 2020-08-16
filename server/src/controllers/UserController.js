@@ -3,7 +3,7 @@ const { User } = require('../models');
 
 const UserController = {
   /**
-    * @endpoint: POST /companies
+    * @endpoint: POST /users
     * @description: Create an user
   **/
   async create(req, res) {
