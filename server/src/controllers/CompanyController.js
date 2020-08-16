@@ -22,6 +22,7 @@ const CompanyController = {
 
       const user = await User.create({
         ...body.user,
+        admin: true,
         company: company.id,
       });
 
