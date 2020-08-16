@@ -17,7 +17,21 @@
     <hr class="border-2">
 
     <div class="flex-grow overflow-hidden text-center rounded-b-lg shadow-lg px-10 py-5 bg-gray-100">
+      <ul class="flex flex-col divide-y h-full scrollbar-track-gray-lighter">
+        <li class="flex flex-col items-center justify-center h-full">
+          <h6 class="mb-3">No employees found</h6>
 
+          <router-link to="/user/create" class="bg-transparent hover:bg-teal-600 text-teal-600 hover:text-white rounded-full border border-teal-500 transition duration-300 py-1 px-3 focus:outline-none focus:shadow-none" title="Add contact">
+            <div class="flex items-center pr-1">
+              <svg viewBox="0 0 20 20" fill="currentColor" class="plus w-6 h-6">
+                <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path>
+              </svg>
+
+              Add contacts
+            </div>
+          </router-link>
+        </li>
+      </ul>
     </div>
 
     <div class="text-center">
