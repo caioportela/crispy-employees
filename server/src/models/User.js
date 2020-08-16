@@ -22,7 +22,7 @@ class User extends Model {
         // Remove attributes from default query
         // https://sequelize.org/master/manual/scopes.html
         attributes: {
-          exclude: ['deletedAt, password']
+          exclude: ['deletedAt', 'password']
         },
       },
     });
