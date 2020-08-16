@@ -34,7 +34,11 @@ router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
 
   if(requiresAuth && !store.getters.isAuthenticated) {
+    // Send user to login if is not authenticated
     next({ path: '/signin' })
+  } else if(!requiresAuth && store.getters.isAuthenticated) {
+    // Send user to home if is authenticated
+    next({ path: '/' })
   } else {
     next()
   }
