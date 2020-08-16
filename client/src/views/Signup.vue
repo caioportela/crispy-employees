@@ -1,5 +1,5 @@
 <template>
-  <div class="self-center mt-10">
+  <div class="flex items-center h-full">
     <div class="max-w-md w-full overflow-hidden text-center rounded-lg shadow-lg px-10 py-5 bg-gray-100">
       <h6 class="text-3xl text-teal-500 mb-4">Sign up</h6>
 
