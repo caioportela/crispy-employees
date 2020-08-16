@@ -15,6 +15,7 @@ router.post('/companies', CompanyController.create);
 
 // User Controller
 router.post('/users', UserController.create);
+router.post('/users/signin', UserController.signin);
 
 
 module.exports = (app) => app.use(router);

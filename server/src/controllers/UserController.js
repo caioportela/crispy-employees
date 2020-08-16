@@ -1,5 +1,5 @@
 const logger = require('../loaders/logger');
-const { User } = require('../models');
+const { Company, User } = require('../models');
 
 const UserController = {
   /**
@@ -25,6 +25,35 @@ const UserController = {
     } catch (e) {
       logger.error(`UserController :: create\n${e}`);
       return res.badRequest(e);
+    }
+  },
+
+  /**
+    * @endpoint: POST /users/signin
+    * @description: Sign in session
+  **/
+  async signin(req, res) {
+    const { username, password } = req.body;
+
+    try {
+      if(!username) { throw 'Missing username attribute'; }
+      if(!password) { throw 'Missing password attribute'; }
+
+      const user = await User.findOne({
+        where: { username }
+      });
+
+      const token = user.generateToken(password);
+      if(!token) { throw 'Invalid username or password'; }
+
+      const company = await Company.findOne({
+        where: { id: user.company },
+      });
+
+      return res.ok({ company, token, user });
+    } catch(e) {
+      logger.error(`UserController :: signin\n${e}`);
+      return res.unauthorized(e);
     }
   },
 };

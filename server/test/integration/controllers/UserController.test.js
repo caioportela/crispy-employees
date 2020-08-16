@@ -97,4 +97,56 @@ describe('Integration | Controller | User Controller', () => {
       });
     });
   });
+
+  describe('POST /users/signin', () => {
+    it('Should fail to sign in without username', (done) => {
+      request.post('/users/signin')
+      .expect(401)
+      .end((err, res) => {
+        if(err) { return done(err); }
+
+        should(res.text).be.equal('Missing username attribute');
+        done();
+      });
+    });
+
+    it('Should fail to sign in without password', (done) => {
+      request.post('/users/signin')
+      .send({ username: 'spncr' })
+      .expect(401)
+      .end((err, res) => {
+        if(err) { return done(err); }
+
+        should(res.text).be.equal('Missing password attribute');
+        done();
+      });
+    });
+
+    it('Should fail to sign in with invalid password', (done) => {
+      request.post('/users/signin')
+      .send({ password: '123', username: 'misha' })
+      .expect(401)
+      .end((err, res) => {
+        if(err) { return done(err); }
+
+        should(res.text).be.equal('Invalid username or password');
+        done();
+      });
+    });
+
+    it('Returns a token for authentication', (done) => {
+      request.post('/users/signin')
+      .send({ password: '123456', username: 'misha' })
+      .expect(200)
+      .end((err, res) => {
+        if(err) { return done(err); }
+
+        should.exist(res.body.company);
+        should.exist(res.body.token);
+        should.exist(res.body.user);
+
+        done();
+      });
+    });
+  });
 });
