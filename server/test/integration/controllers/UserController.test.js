@@ -3,9 +3,38 @@ const request = require('supertest')(server);
 const should = require('should/as-function');
 
 describe('Integration | Controller | User Controller', () => {
+  let authorization;
+  const data = {
+    company: 1,
+    name: 'Simone Simons',
+    password: '123',
+    username: 'simone.simons',
+  };
+
+  before((done) => {
+    request.post('/users/signin')
+    .send({
+      username: 'spencerstl',
+      password: 'Periphery#'
+    })
+    .expect(200)
+    .end((err, res) => {
+      if(err) { return done(err); }
+
+      authorization = `Bearer ${res.body.token}`;
+
+      done();
+    });
+  });
+
   describe('POST /users', () => {
+    it('Should fail without authentication', () => {
+      return request.post('/users').expect(401);
+    });
+
     it('Should fail to create without user', (done) => {
       request.post('/users')
+      .set('Authorization', authorization)
       .expect(400)
       .end((err, res) => {
         if(err) { return done(err); }
@@ -17,6 +46,7 @@ describe('Integration | Controller | User Controller', () => {
 
     it('Should fail to create user without name', (done) => {
       request.post('/users')
+      .set('Authorization', authorization)
       .send({ user: {} })
       .expect(400)
       .end((err, res) => {
@@ -29,6 +59,7 @@ describe('Integration | Controller | User Controller', () => {
 
     it('Should fail to create user without password', (done) => {
       request.post('/users')
+      .set('Authorization', authorization)
       .send({
         user: { name: 'Matt Bellamy' },
       })
@@ -43,6 +74,7 @@ describe('Integration | Controller | User Controller', () => {
 
     it('Should fail to create user without username', (done) => {
       request.post('/users')
+      .set('Authorization', authorization)
       .send({
         user: {
           name: 'Matt Bellamy',
@@ -58,33 +90,9 @@ describe('Integration | Controller | User Controller', () => {
       });
     });
 
-    it('Should fail to create user without company', (done) => {
-      request.post('/users')
-      .send({
-        user: {
-          name: 'Matt Bellamy',
-          password: '123456',
-          username: 'matt.bellamy',
-        }
-      })
-      .expect(400)
-      .end((err, res) => {
-        if(err) { return done(err); }
-
-        should(res.text).be.equal('Missing company attribute');
-        done();
-      });
-    });
-
     it('Return a created user', (done) => {
-      const data = {
-        company: 1,
-        name: 'Misha Mansoor',
-        password: '123456',
-        username: 'misha',
-      };
-
       request.post('/users').send({ user: data })
+      .set('Authorization', authorization)
       .expect('Content-Type', /json/)
       .expect(201)
       .end((err, res) => {
@@ -148,7 +156,7 @@ describe('Integration | Controller | User Controller', () => {
 
     it('Returns a token for authentication', (done) => {
       request.post('/users/signin')
-      .send({ password: '123456', username: 'misha' })
+      .send({ password: data.password, username: data.username })
       .expect(200)
       .end((err, res) => {
         if(err) { return done(err); }

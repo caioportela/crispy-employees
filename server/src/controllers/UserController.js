@@ -17,9 +17,11 @@ const UserController = {
       if(!body.name) { throw 'Missing name attribute'; }
       if(!body.password) { throw 'Missing password attribute'; }
       if(!body.username) { throw 'Missing username attribute'; }
-      if(!body.company) { throw 'Missing company attribute'; }
 
-      const user = await User.create(body);
+      const user = await User.create({
+        ...body,
+        company: req.user.company,
+      });
 
       return res.created({ user });
     } catch (e) {

@@ -6,6 +6,8 @@
 const express = require('express');
 const router = express.Router();
 
+const { isAuthenticated } = require('./middlewares');
+
 const { CompanyController, UserController } = require('./controllers');
 
 
@@ -14,7 +16,7 @@ router.post('/companies', CompanyController.create);
 
 
 // User Controller
-router.post('/users', UserController.create);
+router.post('/users', [isAuthenticated], UserController.create);
 router.post('/users/signin', UserController.signin);
 
 
