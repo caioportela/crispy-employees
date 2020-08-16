@@ -17,7 +17,8 @@ const middlewares = {};
 
 files.forEach((file) => {
   const fileName = path.parse(file).name;
-  const middleware = require(path.join(__dirname, file));
+  let middleware = require(path.join(__dirname, file));
+  middleware = middleware[fileName];
 
   logger.debug(`Loading Middleware: ${fileName}`);
   middlewares[fileName] = middleware;
