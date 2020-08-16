@@ -6,6 +6,7 @@ class Company extends Model {
       name: { type: DataTypes.STRING, allowNull: false, },
     },{
       sequelize,
+      paranoid: true,
       tableName: 'company'
     });
   }
