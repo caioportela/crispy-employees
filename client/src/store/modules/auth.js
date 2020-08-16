@@ -1,6 +1,7 @@
 const SERVER = 'http://localhost:3000'
 
 const state = {
+  company: {},
   token: localStorage.getItem('user-token') || '',
   user: {}
 }
@@ -28,6 +29,8 @@ const actions = {
 const mutations = {
   setToken: (state, data) => {
     localStorage.setItem('user-token', data.token)
+
+    state.company = data.company
     state.token = data.token
     state.user = data.user
   }
