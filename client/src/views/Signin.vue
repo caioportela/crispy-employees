@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="self-center mt-10">
     <div class="max-w-md w-full overflow-hidden text-center rounded-lg shadow-lg px-10 py-5 bg-gray-100">
       <h6 class="text-3xl text-teal-500 mb-4">Sign in</h6>
 
@@ -35,7 +35,7 @@
         <button type="button" class="bg-teal-400 hover:bg-teal-600 transition duration-300 focus:outline-none focus:shadow-none text-lg rounded-full px-10 py-1 text-white">Login</button>
       </form>
 
-      <a href="#" class="text-teal-500 hover:text-teal-600">Create an account</a>
+      <router-link to="/signup" class="text-teal-500 hover:text-teal-600">Create an account</router-link>
     </div>
   </div>
 </template>
