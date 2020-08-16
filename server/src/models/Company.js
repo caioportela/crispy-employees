@@ -7,7 +7,15 @@ class Company extends Model {
     },{
       sequelize,
       paranoid: true,
-      tableName: 'company'
+      tableName: 'company',
+
+      defaultScope: {
+        // Remove attributes from default query
+        // https://sequelize.org/master/manual/scopes.html
+        attributes: {
+          exclude: ['deletedAt']
+        },
+      },
     });
   }
 }
