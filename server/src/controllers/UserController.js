@@ -18,10 +18,13 @@ const UserController = {
       if(!body.password) { throw 'Missing password attribute'; }
       if(!body.username) { throw 'Missing username attribute'; }
 
-      const user = await User.create({
+      let user = await User.create({
         ...body,
         company: req.user.company,
       });
+
+      user = user.get({ plain: true });
+      delete user.password;
 
       return res.created({ user });
     } catch (e) {
