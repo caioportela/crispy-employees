@@ -1,14 +1,12 @@
 <template>
   <div class="self-center mt-10">
     <div class="max-w-md w-full overflow-hidden text-center rounded-lg shadow-lg px-10 py-5 bg-gray-100">
-      <h6 class="text-3xl text-teal-500 mb-4">Sign in</h6>
+      <h6 class="text-3xl text-teal-500">Sign in</h6>
 
-      <div class="flex justify-center mb-6">
-        <span class="flex items-center justify-center border-4 border-gray-500 rounded-full w-24 h-24 text-gray-500">
-          <svg viewBox="0 0 20 20" fill="currentColor" class="user w-20 h-20">
-            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
-          </svg>
-        </span>
+      <div class="flex justify-center text-gray-600">
+        <svg viewBox="0 0 20 20" fill="currentColor" class="user-circle w-32 h-32">
+          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd"></path>
+        </svg>
       </div>
 
       <form class="mb-4">
