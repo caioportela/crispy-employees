@@ -1,13 +1,14 @@
 const SERVER = 'http://localhost:3000'
 
 const state = {
-  company: {},
-  token: localStorage.getItem('user-token') || '',
-  user: {}
+  session: JSON.parse(localStorage.getItem('crispy-session') || '{}')
 }
 
 const getters = {
-  isAuthenticated: (state) => Boolean(state.token)
+  company: (state) => state.session.company,
+  isAuthenticated: (state) => Boolean(state.session.token),
+  token: (state) => state.session.token,
+  user: (state) => state.session.user
 }
 
 const actions = {
@@ -40,11 +41,8 @@ const actions = {
 
 const mutations = {
   authorize: (state, data) => {
-    localStorage.setItem('user-token', data.token)
-
-    state.company = data.company
-    state.token = data.token
-    state.user = data.user
+    localStorage.setItem('crispy-session', JSON.stringify(data || {}))
+    state.session = data || {}
   }
 }
 
