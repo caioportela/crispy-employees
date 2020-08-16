@@ -20,13 +20,16 @@ const CompanyController = {
 
       const company = await Company.create(body.company);
 
-      const user = await User.create({
+      let user = await User.create({
         ...body.user,
         admin: true,
         company: company.id,
       });
 
       const token = user.generateToken(body.user.password);
+
+      user = user.get({ plain: true });
+      delete user.password;
 
       return res.created({ company, token, user });
     } catch(e) {
