@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col h-full">
+  <div class="flex flex-col w-1/4 h-full">
     <div class="flex-shrink-0 overflow-hidden text-center rounded-t-lg shadow-lg px-10 pt-5 bg-gray-100">
       <h6 class="text-2xl text-teal-500 text-center">Employees</h6>
 
