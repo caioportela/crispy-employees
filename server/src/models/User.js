@@ -1,5 +1,6 @@
 const { DataTypes, Model } = require('sequelize');
 const bcrypt = require('bcrypt');
+const jwt = require('../utils/JWT');
 
 class User extends Model {
   static init(sequelize) {
@@ -46,6 +47,13 @@ class User extends Model {
   generateHash() {
     const SALT_ROUNDS = 10;
     return bcrypt.hashSync(this.password, SALT_ROUNDS);
+  }
+
+  generateToken(password) {
+    const isValid = bcrypt.compareSync(password, this.password);
+    if(!isValid) { return null; }
+
+    return jwt.sign({ user: this.id });
   }
 }
 

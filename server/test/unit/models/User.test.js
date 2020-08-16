@@ -1,5 +1,6 @@
 const should = require('should/as-function');
 const bcrypt = require('bcrypt');
+const jwt = require('../../../src/utils/JWT');
 const { User } = require('../../../src/models');
 
 describe('Unit | Model | User', () => {
@@ -42,5 +43,24 @@ describe('Unit | Model | User', () => {
       should.exist(validationError.errors);
       should(validationError.errors[0].message).be.equal('username must be unique');
     }
+  });
+
+  it('Generates a token', async () => {
+    const user = await User.create({
+      ...data,
+      username: 'matt',
+    });
+
+    let token = user.generateToken('987');
+    should(token).be.null();
+
+    token = user.generateToken(data.password);
+
+    jwt.verify(token, async (err, token) => {
+      should(err).be.null();
+
+      should.exist(token.user);
+      should(token.user).be.equal(user.id);
+    });
   });
 });
