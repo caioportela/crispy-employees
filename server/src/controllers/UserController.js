@@ -39,7 +39,10 @@ const UserController = {
       if(!username) { throw 'Missing username attribute'; }
       if(!password) { throw 'Missing password attribute'; }
 
-      const user = await User.findOne({
+      let user = await User.findOne({
+        attributes: {
+          include: ['password']
+        },
         where: { username }
       });
 
@@ -48,6 +51,9 @@ const UserController = {
 
       const token = user.generateToken(password);
       if(!token) { throw message; }
+
+      user = user.get({ plain: true });
+      delete user.password;
 
       const company = await Company.findOne({
         where: { id: user.company },
