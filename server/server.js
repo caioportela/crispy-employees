@@ -1,6 +1,7 @@
 'use strict';
 
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const express = require('express');
 
 const PORT = 3000;
@@ -16,6 +17,7 @@ require('./src/models');
 
 const app = express();
 
+app.use(cors());
 app.use(responses);
 app.use(bodyParser.json());
 
