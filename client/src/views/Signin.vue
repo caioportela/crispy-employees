@@ -33,7 +33,7 @@
         <button type="button" class="bg-teal-400 hover:bg-teal-600 transition duration-300 focus:outline-none focus:shadow-none text-lg rounded-full px-10 py-1 text-white">Login</button>
       </form>
 
-      <router-link to="/signup" class="text-teal-500 hover:text-teal-600">Create an account</router-link>
+      <router-link to="/signup" class="text-teal-500 hover:text-teal-600">Create a company</router-link>
     </div>
   </div>
 </template>
