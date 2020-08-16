@@ -8,20 +8,25 @@
 
     <Avatar/>
 
-    <form class="flex flex-col h-full rounded-b-lg shadow-lg px-6 py-4 bg-gray-100">
+    <form v-on:submit.prevent="save" class="flex flex-col h-full rounded-b-lg shadow-lg px-6 py-4 bg-gray-100">
       <div class="mb-4">
         <label for="name" class="ml-4">Name</label>
-        <input id="name" type="text" class="w-full transition duration-300 rounded-full py-2 px-3 text-sm bg-gray-200 border-2 appearance-none rounded-tg focus:bg-white focus:outline-none focus:border-teal-300 focus:text-gray-900 focus:shadow-outline-blue" placeholder="Name" autocomplete="off">
+        <input v-model="user.name" id="name" type="text" class="w-full transition duration-300 rounded-full py-2 px-3 text-sm bg-gray-200 border-2 appearance-none rounded-tg focus:bg-white focus:outline-none focus:border-teal-300 focus:text-gray-900 focus:shadow-outline-blue" placeholder="Name" autocomplete="off">
       </div>
 
       <div class="mb-4">
+        <label for="username" class="ml-4">Username</label>
+        <input v-model="user.username" id="username" type="text" class="w-full transition duration-300 rounded-full py-2 px-3 text-sm bg-gray-200 border-2 appearance-none rounded-tg focus:bg-white focus:outline-none focus:border-teal-300 focus:text-gray-900 focus:shadow-outline-blue" placeholder="Username" autocomplete="off">
+      </div>
+
+      <div v-if="!user.id" class="mb-4">
         <label for="password" class="ml-4">Password</label>
-        <input id="password" type="password" class="w-full transition duration-300 rounded-full py-2 px-3 text-sm bg-gray-200 border-2 appearance-none rounded-tg focus:bg-white focus:outline-none focus:border-teal-300 focus:text-gray-900 focus:shadow-outline-blue" placeholder="Password" autocomplete="off">
+        <input v-model="user.password" id="password" type="password" class="w-full transition duration-300 rounded-full py-2 px-3 text-sm bg-gray-200 border-2 appearance-none rounded-tg focus:bg-white focus:outline-none focus:border-teal-300 focus:text-gray-900 focus:shadow-outline-blue" placeholder="Password" autocomplete="off">
       </div>
 
-      <div class="mb-4">
+      <div v-if="!user.id" class="mb-4">
         <label for="confirm-password" class="ml-4">Confirm password</label>
-        <input id="confirm-password" type="password" class="w-full transition duration-300 rounded-full py-2 px-3 text-sm bg-gray-200 border-2 appearance-none rounded-tg focus:bg-white focus:outline-none focus:border-teal-300 focus:text-gray-900 focus:shadow-outline-blue" placeholder="Confirm password" autocomplete="off">
+        <input v-model="user.confirmPassword" id="confirm-password" type="password" class="w-full transition duration-300 rounded-full py-2 px-3 text-sm bg-gray-200 border-2 appearance-none rounded-tg focus:bg-white focus:outline-none focus:border-teal-300 focus:text-gray-900 focus:shadow-outline-blue" placeholder="Confirm password" autocomplete="off">
       </div>
 
       <div class="flex-grow flex items-end justify-center">
@@ -31,7 +36,7 @@
           </svg>
         </button>
 
-        <button type="button" class="text-teal-500 border-2 border-teal-500 hover:bg-teal-500 hover:text-gray-200 transition duration-300 p-1 rounded-full mx-2 focus:outline-none focus:shadow-none" title="Done">
+        <button type="submit" class="text-teal-500 border-2 border-teal-500 hover:bg-teal-500 hover:text-gray-200 transition duration-300 p-1 rounded-full mx-2 focus:outline-none focus:shadow-none" title="Done">
           <svg viewBox="0 0 20 20" fill="currentColor" class="check w-8 h-8">
             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
           </svg>
@@ -46,14 +51,48 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import Avatar from '@/components/Avatar'
 import SignOut from '@/components/SignOut'
 
 export default {
   name: 'UserForm',
+  props: ['user'],
   components: {
     Avatar,
     SignOut
+  },
+  methods: {
+    ...mapActions(['saveUser']),
+
+    save: async function() {
+      const { confirmPassword, ...user } = this.user
+
+      // Check for password warning
+      let message = document.getElementById('password-error')
+      if(message) {
+        message.remove()
+      }
+
+      // Check if password match with confirmation
+      if(user.password && (user.password === confirmPassword)) {
+        try {
+          await this.saveUser(user)
+          this.$router.push({ path: '/' })
+        } catch(e) {
+          this.$swal.fire('Error', e, 'error')
+        }
+      } else {
+        // Add warning about password
+        message = document.createElement('small')
+        message.id = 'password-error'
+        message.classList.add('text-red-600', 'ml-4')
+        message.innerHTML = "Password doesn't match"
+
+        const input = document.getElementById('confirm-password')
+        input.parentNode.appendChild(message)
+      }
+    }
   }
 }
 </script>
