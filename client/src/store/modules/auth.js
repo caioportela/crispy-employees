@@ -11,6 +11,19 @@ const getters = {
 }
 
 const actions = {
+  signIn: async ({ commit }, data) => {
+    const res = await fetch(`${SERVER}/users/signin`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+
+    if(res.ok) {
+      const data = await res.json()
+      commit('authorize', data)
+    }
+  },
+
   signUp: async ({ commit }, { company, user }) => {
     const res = await fetch(`${SERVER}/companies`, {
       method: 'POST',
@@ -20,14 +33,13 @@ const actions = {
 
     if(res.ok) {
       const data = await res.json()
-
-      commit('setToken', data)
+      commit('authorize', data)
     }
   }
 }
 
 const mutations = {
-  setToken: (state, data) => {
+  authorize: (state, data) => {
     localStorage.setItem('user-token', data.token)
 
     state.company = data.company
