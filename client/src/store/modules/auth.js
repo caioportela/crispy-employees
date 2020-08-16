@@ -21,7 +21,7 @@ const actions = {
 
     if(res.ok) {
       const data = await res.json()
-      commit('authorize', data)
+      commit('setSession', data)
     }
   },
 
@@ -34,13 +34,13 @@ const actions = {
 
     if(res.ok) {
       const data = await res.json()
-      commit('authorize', data)
+      commit('setSession', data)
     }
   }
 }
 
 const mutations = {
-  authorize: (state, data) => {
+  setSession: (state, data) => {
     localStorage.setItem('crispy-session', JSON.stringify(data || {}))
     state.session = data || {}
   }
