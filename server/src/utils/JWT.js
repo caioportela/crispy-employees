@@ -13,8 +13,8 @@ const JWTService = {
     return jwt.sign(payload, SECRET);
   },
 
-  verify(token, cb) {
-    return jwt.verify(token, SECRET, {}, cb);
+  verify(token) {
+    return jwt.verify(token, SECRET);
   },
 };
 
