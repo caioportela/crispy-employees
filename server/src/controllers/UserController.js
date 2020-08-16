@@ -43,8 +43,11 @@ const UserController = {
         where: { username }
       });
 
+      const message = 'Invalid username or password';
+      if(!user) { throw message; }
+
       const token = user.generateToken(password);
-      if(!token) { throw 'Invalid username or password'; }
+      if(!token) { throw message; }
 
       const company = await Company.findOne({
         where: { id: user.company },

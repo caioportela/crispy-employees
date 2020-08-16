@@ -122,6 +122,18 @@ describe('Integration | Controller | User Controller', () => {
       });
     });
 
+    it('Should fail to sign in with invalid username', (done) => {
+      request.post('/users/signin')
+      .send({ password: '123', username: 'dom' })
+      .expect(401)
+      .end((err, res) => {
+        if(err) { return done(err); }
+
+        should(res.text).be.equal('Invalid username or password');
+        done();
+      });
+    });
+
     it('Should fail to sign in with invalid password', (done) => {
       request.post('/users/signin')
       .send({ password: '123', username: 'misha' })
