@@ -1,21 +1,33 @@
 const logger = require('../loaders/logger');
-const { Company } = require('../models');
+const { Company, User } = require('../models');
 
 const CompanyController = {
   /**
     * @endpoint: POST /companies
-    * @description: Create a company
+    * @description: Creates a company and an user; and sign in the application
   **/
   async create(req, res) {
-    const body = req.body.company;
+    let body = req.body;
 
     try {
-      if(!body) { throw 'Object "company" must be sent'; }
-      if(!body.name) { throw 'Missing name attribute'; }
+      if(!body.company) { throw 'Missing company object'; }
+      if(!body.company.name) { throw 'Missing company name attribute'; }
 
-      const company = await Company.create(body);
+      if(!body.user) { throw 'Missing user object'; }
+      if(!body.user.name) { throw 'Missing name attribute'; }
+      if(!body.user.password) { throw 'Missing password attribute'; }
+      if(!body.user.username) { throw 'Missing username attribute'; }
 
-      return res.created({ company });
+      const company = await Company.create(body.company);
+
+      const user = await User.create({
+        ...body.user,
+        company: company.id,
+      });
+
+      const token = user.generateToken(body.user.password);
+
+      return res.created({ company, token, user });
     } catch(e) {
       logger.error(`CompanyController :: create\n${e}`);
       return res.badRequest(e);
