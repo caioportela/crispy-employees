@@ -8,7 +8,7 @@ const getters = {
   company: (state) => state.session.company,
   isAuthenticated: (state) => Boolean(state.session.token),
   token: (state) => state.session.token,
-  user: (state) => state.session.user
+  sessionUser: (state) => state.session.user
 }
 
 const actions = {
