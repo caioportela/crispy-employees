@@ -35,6 +35,25 @@ const UserController = {
   },
 
   /**
+  * @endpoint: DELETE /users/:id
+  * @description: Remove user by id
+  **/
+  async destroy(req, res) {
+    const company = req.user.company;
+
+    try {
+      await User.destroy({
+        where: { company, id: req.params.id },
+      });
+
+      return res.noContent();
+    } catch (e) {
+      logger.error(`UserController :: destroy\n${e}`);
+      return res.badRequest(e);
+    }
+  },
+
+  /**
     * @endpoint: GET /users
     * @description: Return all users in a company
   **/
@@ -128,7 +147,7 @@ const UserController = {
     const sessionUser = req.user;
     const body = req.body.user;
 
-    if(!sessionUser.admin && sessionUser.id !== parseInt(req.params.id)){
+    if(!sessionUser.admin && sessionUser.id !== parseInt(req.params.id)) {
       return res.forbidden('Permission denied');
     }
 

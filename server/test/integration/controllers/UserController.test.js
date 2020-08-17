@@ -20,7 +20,6 @@ describe('Integration | Controller | User Controller', () => {
     .expect(200)
     .end((err, res) => {
       if(err) { return done(err); }
-      console.log(res.body.user);
       authorization = `Bearer ${res.body.token}`;
 
       done();
@@ -236,9 +235,8 @@ describe('Integration | Controller | User Controller', () => {
     });
   });
 
+  let notAdmin;
   describe('PUT /users/:id', () => {
-    let notAdmin;
-
     before((done) => {
       request.post('/users/signin')
       .send({
@@ -338,6 +336,27 @@ describe('Integration | Controller | User Controller', () => {
 
         done();
       });
+    });
+  });
+
+  describe('DELETE /users/:id', () => {
+    it('Should fail to delete without permission', (done) => {
+      request.delete('/users/1')
+      .set('Authorization', `Bearer ${notAdmin.token}`)
+      .expect(403)
+      .end((err, res) => {
+        if(err) { return done(err); }
+
+        should(res.text).be.equal('Permission denied');
+
+        done();
+      });
+    });
+
+    it('Remove user by id', () => {
+      return request.delete('/users/3')
+      .set('Authorization', authorization)
+      .expect(204);
     });
   });
 });
