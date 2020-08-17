@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen h-screen flex flex-col items-center text-gray-700 bg-gray-300 py-8 px-12">
+  <div class="min-h-screen h-screen flex flex-col items-center text-gray-700 bg-gray-300 lg:py-8 lg:px-12">
     <router-link to="/" class="font-serif text-teal-600 text-4xl" title="Home">
       <span v-if="showCompany">{{company.name}}</span>
       <span v-else>Crispy</span>
