@@ -63,7 +63,10 @@ const UserController = {
 
     try {
       if(term) {
-        where.name = { [Op.like]: `%${term}%` };
+        where[Op.or] = [
+          { name: { [Op.like]: `%${term}%` } },
+          { username: { [Op.like]: `%${term}%` } },
+        ];
       }
 
       const users = await User.findAll({

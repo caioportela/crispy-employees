@@ -147,7 +147,7 @@ A list of all employees can be retrieved with `GET /users`
   - `Authorization: 'Bearer <token>'`
 
 - Parameters
-  - `term`: `String` - Search users by name
+  - `term`: `String` - Search users by name or username
 
 - Request
   ```bash
