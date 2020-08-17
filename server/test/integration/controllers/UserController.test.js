@@ -144,6 +144,34 @@ describe('Integration | Controller | User Controller', () => {
     });
   });
 
+  describe('GET /users/:id', () => {
+    it('Should fail to find user', (done) => {
+      request.get('/users/2000')
+      .set('Authorization', authorization)
+      .expect(404)
+      .end((err, res) => {
+        if(err) { return done(err); }
+
+        should(res.text).be.equal('User not found');
+
+        done();
+      });
+    });
+
+    it('Returns a user by id', (done) => {
+      request.get('/users/2')
+      .set('Authorization', authorization)
+      .expect(200)
+      .end((err, res) => {
+        if(err) { return done(err); }
+
+        should.exist(res.body.user);
+
+        done();
+      });
+    });
+  });
+
   describe('POST /users/signin', () => {
     it('Should fail to sign in without username', (done) => {
       request.post('/users/signin')

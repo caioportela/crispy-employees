@@ -17,6 +17,7 @@ router.post('/companies', CompanyController.create);
 
 // User Controller
 router.get('/users', [isAuthenticated], UserController.find);
+router.get('/users/:id', [isAuthenticated], UserController.findOne);
 router.post('/users', [isAuthenticated], UserController.create);
 router.post('/users/signin', UserController.signin);
 

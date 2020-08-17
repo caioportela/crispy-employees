@@ -34,6 +34,10 @@ const UserController = {
     }
   },
 
+  /**
+    * @endpoint: GET /users
+    * @description: Return all users in a company
+  **/
   async find(req, res) {
     const term = req.query.term;
     let where = { company: req.user.company };
@@ -48,6 +52,29 @@ const UserController = {
       return res.ok({ users });
     } catch(e) {
       logger.error(`UserController :: find\n${e}`);
+      return res.badRequest(e);
+    }
+  },
+
+  /**
+    * @endpoint: GET /users/:id
+    * @description: Return a single user be id
+  **/
+  async findOne(req, res) {
+    const company = req.user.company;
+
+    try {
+      const user = await User.findOne({
+        where: { company, id: req.params.id },
+      });
+
+      if(!user) {
+        return res.notFound('User not found');
+      }
+
+      return res.ok({ user });
+    } catch(e) {
+      logger.error(`UserController :: findOne\n${e}`);
       return res.badRequest(e);
     }
   },
