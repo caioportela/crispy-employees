@@ -327,13 +327,14 @@ describe('Integration | Controller | User Controller', () => {
 
     it('Returns the updated user', (done) => {
       request.put('/users/1')
-      .send({ user: { ...data, username: 'username' } })
+      .send({ user: { name: 'Corey Taylor', username: 'username' } })
       .set('Authorization', authorization)
       .expect(200)
       .end((err, res) => {
         if(err) { return done(err); }
 
         should.exist(res.body.user);
+        should(res.body.user.name).be.equal('Corey Taylor');
 
         done();
       });
