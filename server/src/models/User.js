@@ -15,14 +15,13 @@ class User extends Model {
       },
     }, {
       sequelize,
-      paranoid: true,
       tableName: 'user',
 
       defaultScope: {
         // Remove attributes from default query
         // https://sequelize.org/master/manual/scopes.html
         attributes: {
-          exclude: ['deletedAt', 'password']
+          exclude: ['password']
         },
       },
     });

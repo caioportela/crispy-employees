@@ -6,16 +6,7 @@ class Company extends Model {
       name: { type: DataTypes.STRING, allowNull: false, },
     },{
       sequelize,
-      paranoid: true,
-      tableName: 'company',
-
-      defaultScope: {
-        // Remove attributes from default query
-        // https://sequelize.org/master/manual/scopes.html
-        attributes: {
-          exclude: ['deletedAt']
-        },
-      },
+      tableName: 'company'
     });
   }
 }
