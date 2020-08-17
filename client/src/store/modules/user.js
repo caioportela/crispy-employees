@@ -25,6 +25,23 @@ const actions = {
     }
   },
 
+  deleteUser: async ({ commit, rootGetters }, user) => {
+    try {
+      await fetch(`${SERVER}/users/${user.id}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${rootGetters.token}` }
+      })
+
+      Vue.swal.fire({
+        ...toast,
+        icon: 'success',
+        text: 'User removed'
+      })
+    } catch(e) {
+      Vue.swal.fire('Error', e.message, 'error')
+    }
+  },
+
   getUser: async ({ commit, rootGetters }, userId) => {
     const res = await fetch(`${SERVER}/users/${userId}`, {
       method: 'GET',
