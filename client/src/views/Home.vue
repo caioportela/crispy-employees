@@ -16,9 +16,9 @@
 
     <hr class="border-2">
 
-    <div class="flex-grow overflow-hidden text-center rounded-b-lg shadow-lg px-10 py-5 bg-gray-100">
-      <ul class="flex flex-col divide-y h-full scrollbar-track-gray-lighter">
-        <li class="flex flex-col items-center justify-center h-full">
+    <div class="flex-grow overflow-auto scrollbar scrolling-touch rounded-b-lg shadow-lg px-6 pt-3 bg-gray-100" style="max-height:66vh;">
+      <ul class="flex flex-col h-full">
+        <li v-if="users.length === 0" class="flex flex-col items-center justify-center h-full">
           <h6 class="mb-3">No employees found</h6>
 
           <router-link to="/user/create" class="bg-transparent hover:bg-teal-600 text-teal-600 hover:text-white rounded-full border border-teal-500 transition duration-300 py-1 px-3 focus:outline-none focus:shadow-none" title="Add contact">
@@ -31,6 +31,8 @@
             </div>
           </router-link>
         </li>
+
+        <UserItem v-for="user in users" v-bind:user="user" v-bind:key="user.id"/>
       </ul>
     </div>
 
@@ -41,15 +43,21 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 import SignOut from '@/components/SignOut'
+import UserItem from '@/components/UserItem'
 
 export default {
   name: 'Home',
   components: {
-    SignOut
+    SignOut,
+    UserItem
+  },
+  computed: {
+    ...mapGetters(['users'])
   },
   methods: {
+    ...mapActions(['getUsers']),
     ...mapMutations(['setSession']),
 
     signOut: function() {
@@ -58,6 +66,38 @@ export default {
       this.setSession(emptySession)
       this.$router.push({ path: '/signin' })
     }
+  },
+
+  beforeMount: function() {
+    this.getUsers()
   }
 }
 </script>
+
+<style scoped>
+  .scrollbar {
+    scrollbar-width: thin;
+  }
+
+  .scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  /* Track */
+  .scrollbar::-webkit-scrollbar-track {
+    background: #F1F1F1;
+    border-radius: 10px;
+  }
+
+  /* Handle */
+  .scrollbar::-webkit-scrollbar-thumb {
+    background: #C1C2C1;
+    border-radius: 10px;
+  }
+
+  /* Handle on hover */
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+</style>

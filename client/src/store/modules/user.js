@@ -25,6 +25,19 @@ const actions = {
     }
   },
 
+  getUsers: async ({ commit, rootGetters }) => {
+    const res = await fetch(`${SERVER}/users`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${rootGetters.token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+
+    const data = await res.json()
+    commit('setUsers', data.users)
+  },
+
   saveUser: async ({ commit, dispatch }, user) => {
     const validations = []
 
@@ -65,19 +78,17 @@ const actions = {
 }
 
 const getters = {
-  headers: (state) => {
-    return {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${state}`
-    }
-  }
+  users: (state) => state.users
 }
 
 const mutations = {
+  setUsers: (state, users) => {
+    Vue.set(state, 'users', users)
+  }
 }
 
 const state = {
-  user: {}
+  users: {}
 }
 
 export default {
