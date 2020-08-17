@@ -47,7 +47,10 @@ const UserController = {
         where.name = { [Op.like]: `%${term}%` };
       }
 
-      const users = await User.findAll({ where });
+      const users = await User.findAll({
+        where,
+        order: [['name', 'ASC']],
+      });
 
       return res.ok({ users });
     } catch(e) {
