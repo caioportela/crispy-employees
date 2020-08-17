@@ -106,6 +106,44 @@ describe('Integration | Controller | User Controller', () => {
     });
   });
 
+  describe('GET /users', () => {
+    it('Returns a list of all users from company', (done) => {
+      request.get('/users')
+      .set('Authorization', authorization)
+      .expect(200)
+      .end((err, res) => {
+        if(err) { return done(err); }
+
+        should.exist(res.body.users);
+        should(res.body.users).be.Array();
+
+        done();
+      });
+    });
+
+    it('Returns a list of users with filter', (done) => {
+      const term = 'sot';
+
+      request.get(`/users?term=${term}`)
+      .set('Authorization', authorization)
+      .expect(200)
+      .end((err, res) => {
+        if(err) { return done(err); }
+
+        should.exist(res.body.users);
+        const { users } = res.body;
+
+        should(users).be.Array();
+        users.forEach((user) => {
+          const name = user.name.toLowerCase();
+          should(name).containEql(term);
+        });
+
+        done();
+      });
+    });
+  });
+
   describe('POST /users/signin', () => {
     it('Should fail to sign in without username', (done) => {
       request.post('/users/signin')

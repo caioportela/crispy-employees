@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const logger = require('../loaders/logger');
 const { Company, User } = require('../models');
 
@@ -27,8 +28,26 @@ const UserController = {
       delete user.password;
 
       return res.created({ user });
-    } catch (e) {
+    } catch(e) {
       logger.error(`UserController :: create\n${e}`);
+      return res.badRequest(e);
+    }
+  },
+
+  async find(req, res) {
+    const term = req.query.term;
+    let where = { company: req.user.company };
+
+    try {
+      if(term) {
+        where.name = { [Op.like]: `%${term}%` };
+      }
+
+      const users = await User.findAll({ where });
+
+      return res.ok({ users });
+    } catch(e) {
+      logger.error(`UserController :: find\n${e}`);
       return res.badRequest(e);
     }
   },
