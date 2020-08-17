@@ -51,8 +51,12 @@ const actions = {
       }
     })
 
-    const data = await res.json()
-    commit('setUser', data.user)
+    if(res.ok) {
+      const data = await res.json()
+      commit('setUser', data.user)
+    } else {
+      throw await res.text()
+    }
   },
 
   getUsers: async ({ commit, rootGetters }, term = '') => {
