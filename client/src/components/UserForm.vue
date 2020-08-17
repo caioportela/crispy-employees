@@ -29,6 +29,13 @@
         <input v-model="user.confirmPassword" id="confirm-password" type="password" class="w-full transition duration-300 rounded-full py-2 px-3 text-sm bg-gray-200 border-2 appearance-none rounded-tg focus:bg-white focus:outline-none focus:border-teal-300 focus:text-gray-900 focus:shadow-outline-blue" placeholder="Confirm password" autocomplete="off">
       </div>
 
+      <div class="mb-4">
+        <label class="inline-flex items-center ml-4">
+          <input v-model="user.admin" type="checkbox" class="form-checkbox text-teal-400 text-2xl border-teal-500 focus:shadow-sm">
+          <span class="ml-2">Admin</span>
+        </label>
+      </div>
+
       <div class="flex-grow flex items-end justify-center">
         <button type="button" class="text-red-500 border-2 border-red-500 hover:bg-red-500 hover:text-gray-200 transition duration-300 p-1 rounded-full mx-2 focus:outline-none focus:shadow-none" title="Cancel">
           <svg viewBox="0 0 20 20" fill="currentColor" class="x w-8 h-8">
