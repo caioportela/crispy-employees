@@ -25,6 +25,19 @@ const actions = {
     }
   },
 
+  getUser: async ({ commit, rootGetters }, userId) => {
+    const res = await fetch(`${SERVER}/users/${userId}`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${rootGetters.token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+
+    const data = await res.json()
+    commit('setUser', data.user)
+  },
+
   getUsers: async ({ commit, rootGetters }, term = '') => {
     if(term) {
       term = `?term=${term}`
@@ -82,17 +95,23 @@ const actions = {
 }
 
 const getters = {
-  users: (state) => state.users
+  users: (state) => state.users,
+  user: (state) => state.user
 }
 
 const mutations = {
+  setUser: (state, user) => {
+    Vue.set(state, 'user', user)
+  },
+
   setUsers: (state, users) => {
     Vue.set(state, 'users', users)
   }
 }
 
 const state = {
-  users: {}
+  user: {},
+  users: []
 }
 
 export default {

@@ -28,6 +28,12 @@ const routes = [
     name: 'UserCreate',
     component: () => import('@/views/user/Create.vue'),
     meta: { requiresAuth: true }
+  },
+  {
+    path: '/user/:user_id',
+    name: 'UserShow',
+    component: () => import('@/views/user/Show.vue'),
+    meta: { requiresAuth: true }
   }
 ]
 
