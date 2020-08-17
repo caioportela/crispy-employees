@@ -135,7 +135,6 @@ const UserController = {
 
       // Check if all attributes were sent
       if(!body.name) { throw 'Missing name attribute'; }
-      if(!body.password) { throw 'Missing password attribute'; }
       if(!body.username) { throw 'Missing username attribute'; }
 
       const user = await User.findOne({

@@ -293,21 +293,6 @@ describe('Integration | Controller | User Controller', () => {
       });
     });
 
-    it('Should fail to update user without password', (done) => {
-      request.put('/users/1')
-      .set('Authorization', authorization)
-      .send({
-        user: { name: 'Matt Bellamy' },
-      })
-      .expect(400)
-      .end((err, res) => {
-        if(err) { return done(err); }
-
-        should(res.text).be.equal('Missing password attribute');
-        done();
-      });
-    });
-
     it('Should fail to update user without username', (done) => {
       request.put('/users/1')
       .set('Authorization', authorization)
