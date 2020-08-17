@@ -1,8 +1,11 @@
-# client
+# Crispy Employees (Client)
 
-## Project setup
-```
-npm install
+## Installation
+
+```bash
+$ git clone https://github.com/caioportela/crispy-employees.git
+$ cd crispy-employees/client
+$ npm install
 ```
 
 ### Compiles and hot-reloads for development
