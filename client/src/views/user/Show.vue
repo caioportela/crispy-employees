@@ -82,7 +82,11 @@ export default {
   },
 
   beforeMount: function() {
-    this.getUser(this.$route.params.user_id)
+    try {
+      this.getUser(this.$route.params.user_id)
+    } catch(e) {
+      this.$router.push({ name: 'Error' })
+    }
   },
 
   beforeRouteUpdate: function(to, from, next) {
