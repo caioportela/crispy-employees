@@ -11,7 +11,7 @@ const UserController = {
     const body = req.body.user;
 
     try {
-      // Check if company was sent
+      // Check if user was sent
       if(!body) { throw 'Object "user" must be sent'; }
 
       // Check if all attributes were sent
@@ -116,6 +116,47 @@ const UserController = {
       return res.unauthorized(e);
     }
   },
+
+  /**
+    * @endpoint: PUT /users/:id
+    * @description: Update user attributes
+  **/
+  async update(req, res) {
+    const sessionUser = req.user;
+    const body = req.body.user;
+
+    if(!sessionUser.admin && sessionUser.id !== parseInt(req.params.id)){
+      return res.forbidden('Permission denied');
+    }
+
+    try {
+      // Check if user was sent
+      if(!body) { throw 'Object "user" must be sent'; }
+
+      // Check if all attributes were sent
+      if(!body.name) { throw 'Missing name attribute'; }
+      if(!body.password) { throw 'Missing password attribute'; }
+      if(!body.username) { throw 'Missing username attribute'; }
+
+      const user = await User.findOne({
+        where: {
+          company: sessionUser.company,
+          id: req.params.id
+        }
+      });
+
+      if(!user) {
+        return res.notFound('User not found');
+      }
+
+      await user.update(req.body.user);
+
+      return res.ok({ user });
+    } catch (e) {
+      logger.error(`UserController :: update\n${e}`);
+      return res.badRequest(e);
+    }
+  }
 };
 
 module.exports = UserController;

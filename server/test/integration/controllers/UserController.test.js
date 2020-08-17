@@ -20,7 +20,7 @@ describe('Integration | Controller | User Controller', () => {
     .expect(200)
     .end((err, res) => {
       if(err) { return done(err); }
-
+      console.log(res.body.user);
       authorization = `Bearer ${res.body.token}`;
 
       done();
@@ -229,6 +229,125 @@ describe('Integration | Controller | User Controller', () => {
 
         should.exist(res.body.company);
         should.exist(res.body.token);
+        should.exist(res.body.user);
+
+        done();
+      });
+    });
+  });
+
+  describe('PUT /users/:id', () => {
+    let notAdmin;
+
+    before((done) => {
+      request.post('/users/signin')
+      .send({
+        username: data.username,
+        password: data.password,
+      })
+      .expect(200)
+      .end((err, res) => {
+        if(err) { return done(err); }
+
+        notAdmin = res.body;
+
+        done();
+      });
+    });
+
+    it('Should fail to update without permission', (done) => {
+      request.put('/users/1')
+      .set('Authorization', `Bearer ${notAdmin.token}`)
+      .expect(403)
+      .end((err, res) => {
+        if(err) { return done(err); }
+
+        should(res.text).be.equal('Permission denied');
+
+        done();
+      });
+    });
+
+    it('Should fail to update without user', (done) => {
+      request.put('/users/1')
+      .set('Authorization', authorization)
+      .expect(400)
+      .end((err, res) => {
+        if(err) { return done(err); }
+
+        should(res.text).be.equal('Object "user" must be sent');
+        done();
+      });
+    });
+
+    it('Should fail to update user without name', (done) => {
+      request.put('/users/1')
+      .set('Authorization', authorization)
+      .send({ user: {} })
+      .expect(400)
+      .end((err, res) => {
+        if(err) { return done(err); }
+
+        should(res.text).be.equal('Missing name attribute');
+        done();
+      });
+    });
+
+    it('Should fail to update user without password', (done) => {
+      request.put('/users/1')
+      .set('Authorization', authorization)
+      .send({
+        user: { name: 'Matt Bellamy' },
+      })
+      .expect(400)
+      .end((err, res) => {
+        if(err) { return done(err); }
+
+        should(res.text).be.equal('Missing password attribute');
+        done();
+      });
+    });
+
+    it('Should fail to update user without username', (done) => {
+      request.put('/users/1')
+      .set('Authorization', authorization)
+      .send({
+        user: {
+          name: 'Matt Bellamy',
+          password: '123456',
+        }
+      })
+      .expect(400)
+      .end((err, res) => {
+        if(err) { return done(err); }
+
+        should(res.text).be.equal('Missing username attribute');
+        done();
+      });
+    });
+
+    it('Should fail to update invalid user', (done) => {
+      request.put('/users/3000')
+      .send({ user: data })
+      .set('Authorization', authorization)
+      .expect(404)
+      .end((err, res) => {
+        if(err) { return done(err); }
+
+        should(res.text).be.equal('User not found');
+
+        done();
+      });
+    });
+
+    it('Returns the updated user', (done) => {
+      request.put('/users/1')
+      .send({ user: { ...data, username: 'username' } })
+      .set('Authorization', authorization)
+      .expect(200)
+      .end((err, res) => {
+        if(err) { return done(err); }
+
         should.exist(res.body.user);
 
         done();

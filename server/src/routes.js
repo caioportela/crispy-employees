@@ -20,6 +20,7 @@ router.get('/users', [isAuthenticated], UserController.find);
 router.get('/users/:id', [isAuthenticated], UserController.findOne);
 router.post('/users', [isAuthenticated], UserController.create);
 router.post('/users/signin', UserController.signin);
+router.put('/users/:id', [isAuthenticated], UserController.update);
 
 
 module.exports = (app) => app.use(router);
