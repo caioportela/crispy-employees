@@ -10,7 +10,7 @@
           </svg>
         </span>
 
-        <input type="text" class="w-full transition duration-300 rounded-full py-2 pl-10 text-sm bg-gray-200 border-2 appearance-none rounded-tg focus:bg-white focus:outline-none focus:border-teal-300 focus:text-gray-900 focus:shadow-outline-blue" placeholder="Search..." autocomplete="off">
+        <input v-on:input="search" type="text" class="w-full transition duration-300 rounded-full py-2 pl-10 text-sm bg-gray-200 border-2 appearance-none rounded-tg focus:bg-white focus:outline-none focus:border-teal-300 focus:text-gray-900 focus:shadow-outline-blue" placeholder="Search..." autocomplete="off">
       </div>
     </div>
 
@@ -65,6 +65,11 @@ export default {
 
       this.setSession(emptySession)
       this.$router.push({ path: '/signin' })
+    },
+
+    search: function(evt) {
+      const term = evt.target.value
+      this.getUsers(term)
     }
   },
 

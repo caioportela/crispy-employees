@@ -25,8 +25,12 @@ const actions = {
     }
   },
 
-  getUsers: async ({ commit, rootGetters }) => {
-    const res = await fetch(`${SERVER}/users`, {
+  getUsers: async ({ commit, rootGetters }, term = '') => {
+    if(term) {
+      term = `?term=${term}`
+    }
+
+    const res = await fetch(`${SERVER}/users${term}`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${rootGetters.token}`,
