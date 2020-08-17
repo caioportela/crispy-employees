@@ -44,7 +44,10 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
 
-  const { isAuthenticated, sessionUser } = store.getters
+  const { isAuthenticated } = store.getters
+
+  const sessionUser = store.getters.sessionUser || {}
+  const paths = [`/user/${sessionUser.id}`, `/user/${sessionUser.id}/edit`]
 
   if(requiresAuth && !isAuthenticated) {
     // Send user to login if is not authenticated
@@ -52,11 +55,11 @@ router.beforeEach((to, from, next) => {
   } else if(!requiresAuth && isAuthenticated) {
     // Send user to home if is authenticated
     next({ path: '/' })
-  } else if(isAuthenticated && !sessionUser.admin && to.path !== `/user/${sessionUser.id}`) {
+  } else if(isAuthenticated && sessionUser && !sessionUser.admin && !paths.includes(to.path)) {
     // Send user to own details if is not admin
     next({
       name: 'UserShow',
-      params: { user_id: store.getters.sessionUser.id }
+      params: { user_id: sessionUser.id }
     })
   } else {
     next()
