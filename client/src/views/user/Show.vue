@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col xl:w-1/4 md:2/3 h-full relative">
-    <router-link to="/" class="absolute text-gray-200 top-0 left-0 mt-2 ml-2 p-3" title="Home">
+    <router-link v-if="sessionUser.admin" to="/" class="absolute text-gray-200 top-0 left-0 mt-2 ml-2 p-3" title="Home">
       <svg viewBox="0 0 20 20" fill="currentColor" class="arrow-left w-6 h-6">
         <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"></path>
       </svg>
@@ -46,7 +46,7 @@ export default {
     SignOut
   },
   computed: {
-    ...mapGetters(['user'])
+    ...mapGetters(['user', 'sessionUser'])
   },
   methods: {
     ...mapActions(['getUser'])

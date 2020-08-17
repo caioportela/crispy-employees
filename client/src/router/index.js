@@ -9,7 +9,7 @@ const routes = [
     path: '/',
     name: 'Home',
     component: () => import('@/views/Home.vue'),
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, adminOnly: true }
   },
   {
     path: '/signin',
@@ -44,12 +44,20 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
 
-  if(requiresAuth && !store.getters.isAuthenticated) {
+  const { isAuthenticated, sessionUser } = store.getters
+
+  if(requiresAuth && !isAuthenticated) {
     // Send user to login if is not authenticated
     next({ path: '/signin' })
-  } else if(!requiresAuth && store.getters.isAuthenticated) {
+  } else if(!requiresAuth && isAuthenticated) {
     // Send user to home if is authenticated
     next({ path: '/' })
+  } else if(isAuthenticated && !sessionUser.admin && to.path !== `/user/${sessionUser.id}`) {
+    // Send user to own details if is not admin
+    next({
+      name: 'UserShow',
+      params: { user_id: store.getters.sessionUser.id }
+    })
   } else {
     next()
   }
