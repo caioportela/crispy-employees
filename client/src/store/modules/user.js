@@ -91,6 +91,20 @@ const actions = {
       icon: 'success',
       text: 'User added'
     })
+  },
+
+  updateUser: async ({ commit, dispatch, rootGetters }, user) => {
+    const res = await fetch(`${SERVER}/users/${user.id}`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${rootGetters.token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ user })
+    })
+
+    const data = await res.json()
+    if(res.ok === false) { throw data }
   }
 }
 
