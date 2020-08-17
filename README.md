@@ -1,4 +1,8 @@
 # crispy-employees
+
+![Tests](https://github.com/caioportela/crispy-employees/workflows/Tests/badge.svg)
+[![codecov](https://codecov.io/gh/caioportela/crispy-employees/branch/master/graph/badge.svg?token=BE1X0RHJ88)](https://codecov.io/gh/caioportela/crispy-employees)
+
 A small application featuring crispy employees
 
 ## Installation
