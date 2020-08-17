@@ -95,18 +95,15 @@ const actions = {
       })
     }
 
-    let action = 'createUser'
-
-    if(user.id) {
-      action = 'updateUser'
-    }
+    const action = user.id ? 'updateUser' : 'createUser'
+    const text = user.id ? 'User updated' : 'User added'
 
     await dispatch(action, user)
 
     Vue.swal.fire({
       ...toast,
-      icon: 'success',
-      text: 'User added'
+      text,
+      icon: 'success'
     })
   },
 

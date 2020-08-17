@@ -22,6 +22,8 @@ const actions = {
     if(res.ok) {
       const data = await res.json()
       commit('setSession', data)
+    } else {
+      throw await res.text()
     }
   },
 
