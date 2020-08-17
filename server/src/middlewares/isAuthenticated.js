@@ -22,7 +22,7 @@ async function getUser(token) {
   if(!decoded.user) { throw 'Invalid token'; }
 
   const user = await User.findOne({
-    attributes: ['id', 'company'],
+    attributes: ['id', 'admin', 'company'],
     where: { id: decoded.user },
   });
 
