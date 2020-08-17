@@ -2,7 +2,6 @@
 * isAuthenticated
 *
 * @description :: Check if user is authenticated with JSON web token.
-* @info        :: For the mock authentication, the token can be found in the model.
 **/
 
 const jwt = require('../utils/JWT');
