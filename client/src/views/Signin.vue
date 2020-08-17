@@ -9,7 +9,7 @@
         </svg>
       </div>
 
-      <form v-on:submit.prevent="login" class="mb-4">
+      <form v-on:submit.prevent="login" class="mb-8">
         <div class="relative flex items-center mb-4">
           <span class="absolute left-0 text-gray-600 pl-2">
             <svg viewBox="0 0 20 20" fill="currentColor" class="user w-6 h-6">
@@ -33,7 +33,13 @@
         <button type="submit" class="bg-teal-400 hover:bg-teal-600 transition duration-300 focus:outline-none focus:shadow-none text-lg rounded-full px-10 py-1 text-white">Login</button>
       </form>
 
-      <router-link to="/signup" class="text-teal-500 hover:text-teal-600">Create a company</router-link>
+      <div class="flex-shrink-0">
+        <h6 class="text-sm">Don't have an account?</h6>
+
+        <router-link to="/signup" class="text-teal-500 hover:text-teal-600">
+          Sign up
+        </router-link>
+      </div>
     </div>
   </div>
 </template>

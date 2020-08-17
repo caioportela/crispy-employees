@@ -3,7 +3,7 @@
     <div class="max-w-md w-full overflow-hidden text-center rounded-lg shadow-lg px-10 py-5 bg-gray-100">
       <h6 class="text-3xl text-teal-500 mb-4">Sign up</h6>
 
-      <form v-on:submit.prevent="signUp" class="mb-4">
+      <form v-on:submit.prevent="signUp" class="mb-8">
         <div class="relative flex w-full items-center overflow-hidden mb-4">
           <span class="absolute inset-y-0 left-0 flex items-center text-gray-600 pl-2">
             <svg viewBox="0 0 20 20" fill="currentColor" class="home w-6 h-6">
@@ -47,7 +47,11 @@
         <button type="submit" class="bg-teal-400 hover:bg-teal-600 transition duration-300 focus:outline-none focus:shadow-none text-lg rounded-full px-10 py-1 text-white">Register</button>
       </form>
 
-      <router-link to="/signin" class="text-teal-500 hover:text-teal-600">Sign in</router-link>
+      <div class="flex-shrink-0">
+        <h6 class="text-sm">Have an account?</h6>
+
+        <router-link to="/signin" class="text-teal-500 hover:text-teal-600">Sign in</router-link>
+      </div>
     </div>
   </div>
 </template>
